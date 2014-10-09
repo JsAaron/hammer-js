@@ -32,7 +32,7 @@
             from each other. This makes it possible to build multi-user interfaces.</p>
 
     </div>
-    <script src="../../hammer.min.js"></script>
+    <script src="../hammer.js"></script>
     <script>
 
         Object.prototype.toDirString = function() {
@@ -64,9 +64,9 @@
                 el.innerText = ev.toDirString();
             });
         }
-
-        addHammer(document.querySelector("#left"));
-        addHammer(document.querySelector("#right"));
+        
+       addHammer(document.querySelector("#left"));
+       addHammer(document.querySelector("#right"));
 
     </script>
 </body>
