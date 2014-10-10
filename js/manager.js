@@ -128,6 +128,8 @@ Hammer.defaults = {
     }
 };
 
+    
+
 
 var STOP = 1;
 var FORCED_STOP = 2;
