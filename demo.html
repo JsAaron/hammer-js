@@ -5,9 +5,19 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta name="msapplication-tap-highlight" content="no"/>
     <link rel="stylesheet" href="tests/assets/style.css">
+    <style type="text/css">
+
+    #myElement {
+  background: silver;
+  height: 300px;
+  text-align: center;
+  font: 30px/300px Helvetica, Arial, sans-serif;
+}
+    </style>
     <title>Hammer.js</title>
 </head>
 <body>
+
     <div class="container">
         <div id="hit" class="bg1" style="padding: 30px; height: 200px;">
         </div>
@@ -18,6 +28,8 @@
     </div>
     <script src="hammer.js"></script>
     <script>
+
+   
 
         Object.prototype.toDirString = function() {
             var output = [];
@@ -39,17 +51,34 @@
         var log = document.querySelector("#log");
         var debug = document.querySelector("#debug");
 
-        var mc = new Hammer(el);
-
-        mc.add(
-            new Hammer.Pan({
-                direction: Hammer.DIRECTION_HORIZONTAL
-            })
-        )
-
-        mc.on("pan", function(evt){
-            console.log(evt)
+        var mc = new Hammer.Manager(el, {
+            recognizers: [
+                // RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
+                [Hammer.Pan, {
+                    direction: Hammer.DIRECTION_HORIZONTAL
+                }]
+            ]
         });
+
+        // var pan = new Hammer.Pan();
+
+        // mc.add(pan)
+
+        mc.on("pan", function(ev) {
+            console.log(ev);
+        });
+
+         // mc.on("pinch", function(ev) {
+         //     debug.innerHTML = [ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
+         // });
+
+        // console.log(mc)
+
+        // var mc = new Hammer(el);
+
+        // mc.on("hammer.input", function(ev) {
+        //     debug.innerHTML = [ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
+        // });
 
 
         // mc.get('pan').set({
@@ -64,9 +93,6 @@
 
         // mc.get('pinch').set({ enable: true });
 
-        // mc.on("hammer.input", function(ev) {
-        //     debug.innerHTML = [ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
-        // });
 
     </script>
 </body>
