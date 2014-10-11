@@ -1,6 +1,6 @@
 <html><head>
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="assets/style.css">
+    <link rel="stylesheet" href="recognizeWith.css">
     <title>Hammer.js</title>
 
     <style>
@@ -39,7 +39,7 @@
 <div id="hit" style="background-color: rgb(66, 214, 146); width: 150px; height: 150px; -webkit-user-select: none; -webkit-user-drag: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); -webkit-transform: translate3d(645px, 312px, 0px) scale(1, 1) rotate3d(0, 0, 0, 0deg); background-position: initial initial; background-repeat: initial initial;" class="animate">translate3d(645px, 312px, 0) scale(1, 1) rotate3d(0,0,0,0deg)</div>
 
 
-<script src="hammer.js"></script>
+<script src="../hammer.js"></script>
 <script>
 
     var reqAnimationFrame = (function () {
@@ -60,46 +60,27 @@
 
     var mc = new Hammer.Manager(el);
 
+    mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+
+    mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
+    mc.add(new Hammer.Rotate({ threshold: 0 })).recognizeWith(mc.get('pan'));
+    mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+
+    mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
     mc.add(new Hammer.Tap());
 
-    mc.on("tap", function(){
-        console.log('tap')
+    mc.on("panstart panmove", onPan);
+    mc.on("rotatestart rotatemove", onRotate);
+    mc.on("pinchstart pinchmove", onPinch);
+    mc.on("swipe", onSwipe);
+    mc.on("tap", onTap);
+    mc.on("doubletap", onDoubleTap);
+
+    mc.on("hammer.input", function(ev) {
+        if(ev.isFinal) {
+            resetElement();
+        }
     });
-
-
-
-    // mc.add(new Hammer.Pan({
-    //     threshold: 0,
-    //     pointers: 0
-    // }));
-
-    // mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
-    // mc.add(new Hammer.Rotate({
-    //     threshold: 0
-    // })).recognizeWith(mc.get('pan'));
-    // 
-    // mc.add(new Hammer.Pinch({
-    //     threshold: 0
-    // })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
-
-    // mc.add(new Hammer.Tap({
-    //     event: 'doubletap',
-    //     taps: 2
-    // }));
-    // mc.add(new Hammer.Tap());
-
-    // mc.on("panstart panmove", onPan);
-    // mc.on("rotatestart rotatemove", onRotate);
-    // mc.on("pinchstart pinchmove", onPinch);
-    // mc.on("swipe", onSwipe);
-    // mc.on("tap", onTap);
-    // mc.on("doubletap", onDoubleTap);
-
-    // mc.on("hammer.input", function(ev) {
-    //     if(ev.isFinal) {
-    //         resetElement();
-    //     }
-    // });
 
 
     function resetElement() {

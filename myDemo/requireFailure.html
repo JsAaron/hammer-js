@@ -3,89 +3,7 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta name="msapplication-tap-highlight" content="no">
     <title>Hammer.js</title>
-    <style>
-
-        *, *:after, *:before {
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-        }
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            min-height: 100%;
-            background: #eee;
-            font: 13px/1.5em 'Open Sans', Helvetica, Arial, sans-serif;
-        }
-
-        a {
-            color: #4986e7;
-        }
-
-        .bg1, .green { background: #42d692; }
-        .bg2, .blue { background: #4986e7; }
-        .bg3, .red { background: #d06b64; }
-        .bg4, .purple { background: #cd74e6; }
-        .bg5, .azure { background: #9fe1e7; }
-
-        body {
-            margin: 20px;
-        }
-
-        pre {
-            background: #fff;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .clear { clear: both; }
-
-
-
-
-        .container {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .panes.wrapper {
-            max-height: 400px;
-            max-width: 800px;
-            background: #666;
-            margin: 40px auto;
-        }
-
-        .panes {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .pane {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            left: 0;
-            top: 0;
-            text-align: center;
-            font: bold 60px/250px 'Open Sans', Helvetica, Arial, sans-serif;
-            color: #fff;
-        }
-
-        .panes.animate > .pane {
-            transition: all .3s;
-            -webkit-transition: all .3s;
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="requireFailure.css">
 </head>
 <body>
 
@@ -143,7 +61,7 @@
         <p>Nested recognizers are possible with some threshold and with use of <code>requireFailure()</code>.</p>
     </div>
 
-    <script src="hammer.js"></script>
+    <script src="../hammer.js"></script>
     <script>
 
         var reqAnimationFrame = (function() {
