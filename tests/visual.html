@@ -41,7 +41,7 @@
 <div id="hit" style="background: #42d692; width: 150px; height: 150px;"></div>
 
 
-<script src="../../hammer.js"></script>
+<script src="../hammer.js"></script>
 <script>
 
     var reqAnimationFrame = (function () {
@@ -62,16 +62,27 @@
 
     var mc = new Hammer.Manager(el);
 
-    mc.add(new Hammer.Pan({ threshold: 0, pointers: 0 }));
+    mc.add(new Hammer.Pan({
+        threshold: 0,
+        pointers: 0
+    }));
 
-    mc.add(new Hammer.Swipe()).recognizeWith(mc.get('pan'));
-    mc.add(new Hammer.Rotate({ threshold: 0 })).recognizeWith(mc.get('pan'));
-    mc.add(new Hammer.Pinch({ threshold: 0 })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+    mc.add( new Hammer.Swipe()).recognizeWith(mc.get('pan') );
+    mc.add(new Hammer.Rotate({
+        threshold: 0
+    })).recognizeWith(mc.get('pan'));
 
-    mc.add(new Hammer.Tap({ event: 'doubletap', taps: 2 }));
+    mc.add(new Hammer.Pinch({
+        threshold: 0
+    })).recognizeWith([mc.get('pan'), mc.get('rotate')]);
+
+    mc.add(new Hammer.Tap({
+        event: 'doubletap',
+        taps: 2
+    }));
     mc.add(new Hammer.Tap());
 
-    mc.on("panstart panmove", onPan);
+    mc.on("panstart panmove", onPan); 
     mc.on("rotatestart rotatemove", onRotate);
     mc.on("pinchstart pinchmove", onPinch);
     mc.on("swipe", onSwipe);
@@ -88,12 +99,12 @@
     function resetElement() {
         el.className = 'animate';
         transform = {
-            translate: { x: START_X, y: START_Y },
-            scale: 1,
-            angle: 0,
-            rx: 0,
-            ry: 0,
-            rz: 0
+            translate : { x: START_X, y: START_Y },
+            scale     : 1,
+            angle     : 0,
+            rx        : 0,
+            ry        : 0,
+            rz        : 0
         };
 
         requestElementUpdate();
