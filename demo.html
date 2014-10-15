@@ -4,20 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta name="msapplication-tap-highlight" content="no"/>
-    <link rel="stylesheet" href="tests/assets/style.css">
-    <style type="text/css">
-
-    #myElement {
-  background: silver;
-  height: 300px;
-  text-align: center;
-  font: 30px/300px Helvetica, Arial, sans-serif;
-}
-    </style>
     <title>Hammer.js</title>
 </head>
 <body>
-
     <div class="container">
         <div id="hit" class="bg1" style="padding: 30px; height: 200px;">
         </div>
@@ -26,10 +15,10 @@
 
         <pre id="log" style="overflow:hidden;"></pre>
     </div>
-    <script src="hammer.js"></script>
+    <script src="js/input.js"></script>
+    <script src="js/manager.js"></script>
     <script>
 
-   
 
         Object.prototype.toDirString = function() {
             var output = [];
@@ -46,53 +35,25 @@
             }
             return output.join("\n")
         };
-
-        var el = document.querySelector("#hit");
-        var log = document.querySelector("#log");
+        
+        var el    = document.querySelector("#hit");
+        var log   = document.querySelector("#log");
         var debug = document.querySelector("#debug");
 
-        var mc = new Hammer.Manager(el, {
-            recognizers: [
-                // RecognizerClass, [options], [recognizeWith, ...], [requireFailure, ...]
-                [Hammer.Pan, {
-                    direction: Hammer.DIRECTION_HORIZONTAL
-                }]
-            ]
-        });
+        var mc = new Hammer(el);
 
-        // var pan = new Hammer.Pan();
-
-        // mc.add(pan)
-
-        mc.on("pan", function(ev) {
-            console.log(ev);
-        });
-
-         // mc.on("pinch", function(ev) {
-         //     debug.innerHTML = [ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
-         // });
-
-        // console.log(mc)
-
-        // var mc = new Hammer(el);
+        // mc.get('swipe').set({
+        //     direction: Hammer.DIRECTION_VERTICAL
+        // });
+        
+        mc.on('swipe',function(evt){
+            console.log(evt)
+            // debug.innerHTML = [evt].join("<br>");
+        })
 
         // mc.on("hammer.input", function(ev) {
         //     debug.innerHTML = [ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
         // });
-
-
-        // mc.get('pan').set({
-        //     direction: Hammer.DIRECTION_VERTICAL
-        // });
-
-        // mc.on('swipe pan',function(evt){
-        //     console.log(evt)
-        // })
-
-        // console.log(mc)
-
-        // mc.get('pinch').set({ enable: true });
-
 
     </script>
 </body>
