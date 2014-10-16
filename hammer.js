@@ -1215,6 +1215,7 @@ function cleanTouchActions(actions) {
 }
 
 /**
+ * 识别器流程
  * Recognizer flow explained; *
  * All recognizers have the initial state of POSSIBLE when a input session starts.
  * The definition of a input session is from the first input until the last input, with all it's movement in it. *
@@ -1251,6 +1252,7 @@ var STATE_FAILED = 32;
 
 /**
  * Recognizer
+ * 每一个识别器都要需要继承基类
  * Every recognizer needs to extend from this class.
  * @constructor
  * @param {Object} options
@@ -2013,6 +2015,7 @@ Hammer.VERSION = '2.0.4';
 Hammer.defaults = {
     /**
      * set if DOM events are being triggered.
+     * 如果DOM事件被触发设置设置DOM事件
      * But this is slower and unused by simple implementations, so disabled by default.
      * @type {Boolean}
      * @default false

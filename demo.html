@@ -5,18 +5,29 @@
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1">
     <meta name="msapplication-tap-highlight" content="no"/>
     <title>Hammer.js</title>
+    <style>
+        .bg1{
+            padding: 30px;
+            width: 300px; 
+            height: 200px;
+            margin-left:auto;
+            margin-right: auto;
+            background-color: red;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
-        <div id="hit" class="bg1" style="padding: 30px; height: 200px;">
+        <div id="hit" class="bg1">
         </div>
 
         <pre id="debug" style="overflow:hidden; background: #eee; padding: 15px;"></pre>
 
         <pre id="log" style="overflow:hidden;"></pre>
     </div>
-    <script src="js/input.js"></script>
-    <script src="js/manager.js"></script>
+<!--     // <script src="js/input.js"></script>
+    // <script src="js/manager.js"></script> -->
+    <script src="hammer.js"></script> 
     <script>
 
 
@@ -46,8 +57,9 @@
         //     direction: Hammer.DIRECTION_VERTICAL
         // });
         
-        mc.on('swipe',function(evt){
-            console.log(evt)
+        mc.on('swipe tap', function(ev) {
+            console.log(ev)
+            debug.innerHTML = [ev.pointerType,ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
             // debug.innerHTML = [evt].join("<br>");
         })
 
