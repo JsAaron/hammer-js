@@ -2146,8 +2146,14 @@ function Manager(element, options) {
     this.options = merge(options, Hammer.defaults);
     this.options.inputTarget = this.options.inputTarget || element;
 
+    //存在on回调
+    //swipe [callback1,callback2...]
+    //tap [callback1,callback2...]
     this.handlers = {};
+
     this.session = {};
+
+    //存放手势对象
     this.recognizers = [];
 
     this.element = element;
@@ -2165,6 +2171,7 @@ function Manager(element, options) {
     each(options.recognizers, function(item) {
         //构建手势对象，增加到手势容器里面
         var recognizer = this.add(new (item[0])(item[1]));
+        //如果有合并的手势处理
         item[2] && recognizer.recognizeWith(item[2]);
         item[3] && recognizer.requireFailure(item[3]);
     }, this);
@@ -2260,6 +2267,7 @@ Manager.prototype = {
 
     /**
      * get a recognizer by its event name.
+     * 通过手势的事件名得到手势对象
      * @param {Recognizer|String} recognizer
      * @returns {Recognizer|Null}
      */
@@ -2289,14 +2297,17 @@ Manager.prototype = {
         }
 
         // remove existing
+        // 如果存在指定手势，删除
         var existing = this.get(recognizer.options.event);
         if (existing) {
             this.remove(existing);
         }
 
+        //加入管理队列
         this.recognizers.push(recognizer);
         recognizer.manager = this;
 
+        //更新touchAction属性
         this.touchAction.update();
         return recognizer;
     },
