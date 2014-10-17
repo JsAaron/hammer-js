@@ -408,6 +408,7 @@ Input.prototype = {
 };
 
 /**
+ * 用个这Manager构造器创建一个输入类型的管理
  * create new input type manager
  * called by the Manager constructor
  * @param {Hammer} manager
@@ -1999,6 +2000,7 @@ inherit(TapRecognizer, Recognizer, {
  */
 function Hammer(element, options) {
     options = options || {};
+    //配置手势识别器参数
     options.recognizers = ifUndefined(options.recognizers, Hammer.defaults.preset);
     return new Manager(element, options);
 }
@@ -2141,7 +2143,10 @@ function Manager(element, options) {
     this.recognizers = [];
 
     this.element = element;
+
+    //创建一个输入环境的实例对象
     this.input = createInputInstance(this);
+
     this.touchAction = new TouchAction(this, this.options.touchAction);
 
     toggleCssProps(this, true);
