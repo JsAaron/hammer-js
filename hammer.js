@@ -371,6 +371,7 @@ function Input(manager, callback) {
 
     // smaller wrapper around the handler, for the scope and the enabled state of the manager,
     // so when disabled the input events are completely bypassed.
+    // 小包装的处理句柄，用来为manager启动状态和作用域
     this.domHandler = function(ev) {
         if (boolOrFn(manager.options.enable, [manager])) {
             self.handler(ev);
@@ -390,6 +391,7 @@ Input.prototype = {
 
     /**
      * bind the events
+     * 开始绑定事件
      */
     init: function() {
         this.evEl && addEventListeners(this.element, this.evEl, this.domHandler);
@@ -403,6 +405,7 @@ Input.prototype = {
     destroy: function() {
         this.evEl && removeEventListeners(this.element, this.evEl, this.domHandler);
         this.evTarget && removeEventListeners(this.target, this.evTarget, this.domHandler);
+        //move up事件绑到window上面
         this.evWin && removeEventListeners(getWindowForElement(this.element), this.evWin, this.domHandler);
     }
 };
@@ -423,9 +426,9 @@ function createInputInstance(manager) {
     } else if (SUPPORT_POINTER_EVENTS) {
         Type = PointerEventInput;
     } else if (SUPPORT_ONLY_TOUCH) {
-        Type = TouchInput;
+        Type = TouchInput; //移动手机端
     } else if (!SUPPORT_TOUCH) {
-        Type = MouseInput;
+        Type = MouseInput; //桌面
     } else {
         Type = TouchMouseInput;
     }
@@ -721,7 +724,9 @@ var MOUSE_INPUT_MAP = {
 var MOUSE_ELEMENT_EVENTS = 'mousedown';
 var MOUSE_WINDOW_EVENTS = 'mousemove mouseup';
 
+
 /**
+ * 鼠标输入，桌面PC
  * Mouse events input
  * @constructor
  * @extends Input
@@ -730,7 +735,10 @@ function MouseInput() {
     this.evEl = MOUSE_ELEMENT_EVENTS;
     this.evWin = MOUSE_WINDOW_EVENTS;
 
+    //用来禁止TouchMouse事件
     this.allow = true; // used by Input.TouchMouse to disable mouse events
+
+    //鼠标按下的状态
     this.pressed = false; // mousedown state
 
     Input.apply(this, arguments);
@@ -2145,13 +2153,17 @@ function Manager(element, options) {
     this.element = element;
 
     //创建一个输入环境的实例对象
+    //绑定事件与增加处理的句柄回调函数
     this.input = createInputInstance(this);
 
+    //用于处理元素对touchAction的属性的支持
     this.touchAction = new TouchAction(this, this.options.touchAction);
 
     toggleCssProps(this, true);
 
+    //默认初始化手势
     each(options.recognizers, function(item) {
+        //构建手势对象，增加到手势容器里面
         var recognizer = this.add(new (item[0])(item[1]));
         item[2] && recognizer.recognizeWith(item[2]);
         item[3] && recognizer.requireFailure(item[3]);
