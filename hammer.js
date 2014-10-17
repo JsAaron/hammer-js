@@ -750,6 +750,10 @@ inherit(MouseInput, Input, {
      * @param {Object} ev
      */
     handler: function MEhandler(ev) {
+        //定义的事件类型
+        // mousedown: 1
+        // mousemove: 2
+        // mouseup: 4
         var eventType = MOUSE_INPUT_MAP[ev.type];
 
         // on start we want to have the left mouse button down
