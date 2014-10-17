@@ -757,7 +757,9 @@ inherit(MouseInput, Input, {
         var eventType = MOUSE_INPUT_MAP[ev.type];
 
         // on start we want to have the left mouse button down
+        // 开始我们按下鼠标左键
         if (eventType & INPUT_START && ev.button === 0) {
+            //按下标记
             this.pressed = true;
         }
 
