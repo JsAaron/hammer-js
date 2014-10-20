@@ -437,16 +437,20 @@ function createInputInstance(manager) {
 
 /**
  * handle input events
+ * 处理输入事件
  * @param {Manager} manager
  * @param {String} eventType
  * @param {Object} input
  */
 function inputHandler(manager, eventType, input) {
+    //触发点数量
     var pointersLen = input.pointers.length;
     var changedPointersLen = input.changedPointers.length;
+    //输入的顺序
     var isFirst = (eventType & INPUT_START && (pointersLen - changedPointersLen === 0));
     var isFinal = (eventType & (INPUT_END | INPUT_CANCEL) && (pointersLen - changedPointersLen === 0));
 
+    //取布尔值
     input.isFirst = !!isFirst;
     input.isFinal = !!isFinal;
 
@@ -459,6 +463,7 @@ function inputHandler(manager, eventType, input) {
     input.eventType = eventType;
 
     // compute scale, rotation etc
+    // 计算缩放、旋转等
     computeInputData(manager, input);
 
     // emit secret event
@@ -470,6 +475,7 @@ function inputHandler(manager, eventType, input) {
 
 /**
  * extend the data with some usable properties like scale, rotate, velocity etc
+ * 扩展数据和一些有用的属性如缩放、旋转、速度等
  * @param {Object} manager
  * @param {Object} input
  */
@@ -763,15 +769,18 @@ inherit(MouseInput, Input, {
             this.pressed = true;
         }
 
+        //如果是移动事件，并且不是左键触发  
         if (eventType & INPUT_MOVE && ev.which !== 1) {
             eventType = INPUT_END;
         }
 
         // mouse must be down, and mouse events are allowed (see the TouchMouse input)
+        // 如果鼠标不是通过按下触发的，算错误的处理，直接返回
         if (!this.pressed || !this.allow) {
             return;
         }
 
+        //如果是up事件
         if (eventType & INPUT_END) {
             this.pressed = false;
         }
