@@ -469,6 +469,7 @@ function inputHandler(manager, eventType, input) {
     // emit secret event
     manager.emit('hammer.input', input);
 
+    //运行识别器
     manager.recognize(input);
     manager.session.prevInput = input;
 }
@@ -490,6 +491,7 @@ function computeInputData(manager, input) {
     }
 
     // to compute scale and rotation we need to store the multiple touches
+    // 多点判断
     if (pointersLength > 1 && !session.firstMultiple) {
         session.firstMultiple = simpleCloneInputData(input);
     } else if (pointersLength === 1) {
@@ -740,13 +742,10 @@ var MOUSE_WINDOW_EVENTS = 'mousemove mouseup';
 function MouseInput() {
     this.evEl = MOUSE_ELEMENT_EVENTS;
     this.evWin = MOUSE_WINDOW_EVENTS;
-
     //用来禁止TouchMouse事件
     this.allow = true; // used by Input.TouchMouse to disable mouse events
-
     //鼠标按下的状态
     this.pressed = false; // mousedown state
-
     Input.apply(this, arguments);
 }
 
@@ -761,6 +760,10 @@ inherit(MouseInput, Input, {
         // mousemove: 2
         // mouseup: 4
         var eventType = MOUSE_INPUT_MAP[ev.type];
+
+        if(eventType === 4){
+            console.log(111) 
+        }
 
         // on start we want to have the left mouse button down
         // 开始我们按下鼠标左键
@@ -1466,6 +1469,7 @@ Recognizer.prototype = {
     recognize: function(inputData) {
         // make a new copy of the inputData
         // so we can change the inputData without messing up the other recognizers
+        // 拷贝一份新的输入对象
         var inputDataClone = extend({}, inputData);
 
         // is is enabled and allow recognizing?
@@ -2256,8 +2260,8 @@ Manager.prototype = {
         var i = 0;
         while (i < recognizers.length) {
             recognizer = recognizers[i];
-
             // find out if we are allowed try to recognize the input for this one.
+            // 果我们允许尝试识别的输入，找到它
             // 1.   allow if the session is NOT forced stopped (see the .stop() method)
             // 2.   allow if we still haven't recognized a gesture in this session, or the this recognizer is the one
             //      that is being recognized.

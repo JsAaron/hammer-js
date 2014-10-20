@@ -57,7 +57,7 @@
         //     direction: Hammer.DIRECTION_VERTICAL
         // });
         
-        mc.on('swipe tap', function(ev) {
+        mc.on('swipe press', function(ev) {
             console.log(ev)
             debug.innerHTML = [ev.pointerType,ev.srcEvent.type, ev.pointers.length, ev.isFinal, ev.deltaX, ev.deltaY].join("<br>");
             // debug.innerHTML = [evt].join("<br>");
